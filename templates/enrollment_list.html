@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Enrollments</h2>
+    <table class="table table-striped mt-4">
+        <thead>
+            <tr>
+                <th>Course</th>
+                <th>Student</th>
+                <th>Enrollment Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for enrollment in enrollments %}
+            <tr>
+                <td>{{ enrollment.course.title }}</td>
+                <td>{{ enrollment.student.username }}</td>
+                <td>{{ enrollment.enrolled_at|date:"Y-m-d" }}</td>
+                <td>
+                    {% if enrollment.is_active %}
+                    <span class="badge bg-success">Active</span>
+                    {% else %}
+                    <span class="badge bg-secondary">Inactive</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if user.is_admin or user == enrollment.course.teacher %}
+                    <a href="#" class="btn btn-sm btn-warning">Edit</a>
+                    {% endif %}
+                    {% if user.is_admin or user == enrollment.student %}
+                    <a href="#" class="btn btn-sm btn-danger">Withdraw</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

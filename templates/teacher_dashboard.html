@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Teacher Dashboard</h2>
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    My Courses
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Manage Courses</h5>
+                    <p class="card-text">View, create, edit, and delete your courses.</p>
+                    <a href="{% url 'course_list' %}" class="btn btn-primary">Manage</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    My Enrollments
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">View Course Enrollments</h5>
+                    <p class="card-text">View students enrolled in your courses.</p>
+                    <a href="{% url 'enrollment_list' %}" class="btn btn-success">View</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

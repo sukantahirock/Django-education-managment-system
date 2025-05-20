@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Courses</h2>
+    {% if user.is_teacher or user.is_admin %}
+    <div class="mb-3">
+        <a href="{% url 'course_create' %}" class="btn btn-success">Create New Course</a>
+
+    </div>
+    {% endif %}
+    <div class="row">
+        {% for course in courses %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ course.title }}</h5>
+                    <p class="card-text">{{ course.description|truncatechars:100 }}</p>
+                    <p class="card-text"><small class="text-muted">Teacher: {{ course.teacher.username }}</small></p>
+                    <div class="d-flex justify-content-between">
+                        <a href="#" class="btn btn-sm btn-primary">View</a>
+                        
+                        {% if user.is_student %}
+                        <form method="post" action="{% url 'enroll_in_course' course.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-success">Enroll</button>
+                        </form>
+                        
+                        {% endif %}
+                        {% if user == course.teacher or user.is_admin %}
+                        <a href="{% url 'course_edit' course.id %}" class="btn btn-sm btn-warning">Edit</a>
+                        <a href="{% url 'course_delete' course.id %}" class="btn btn-sm btn-danger">Delete</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
